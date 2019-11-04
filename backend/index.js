@@ -4,34 +4,28 @@ const mysql= require('mysql');
 
 const app=express();
 
-const port =4000;
+const port =5000;
 
+
+var bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.listen(port,()=>{
     console.log(`listening on port ${port}`);
 })
 
-const connection =mysql.createConnection({
-    host:'localhost',
-    user:'demo',
-    password:'linux',
-    database:'backend'
-})
+//List of Users
+const allUsers=require('./routes/users');
 
-connection.connect((err)=>{
-    if(err)
-    {
-        console.log('Error '+err);
-    }
-    else{
-        console.log('Mysql connected');
-    }
-})
+app.use('/users',allUsers);
 
-connection.query("select * from hello",(err,rows,fields)=>{
-    console.log('Done')
-    rows.map((q)=>{
-        console.log(q.b+" "+q.a);
-    })
-    //res.json(rows);
-})
+//List of categories
+const cats=require('./routes/vehiclesAndFares');
+
+app.use('/cat',cats);
+
+
+const connection=require('./db/index');
+
