@@ -6,11 +6,12 @@ const app=express();
 
 
 
-const connection =mysql.createConnection({
+let connection =mysql.createConnection({
     host:'localhost',
     user:'demo',
     password:'linux',
-    database:'backend'
+    database:'backend',
+    multipleStatements: true
 })
 
 connection.connect((err)=>{
