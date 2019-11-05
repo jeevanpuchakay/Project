@@ -1,25 +1,31 @@
 const router= require('express').Router();
 
-const connection=require('../db/index');
+let connection=require('../db/index');
 
 
-router.route('/').get((req,res)=>{
+router.route('/').get(async(req,res)=>{
 
     const q1="select * from vehicleCategory";
-    connection.query(q1,(err,rows,fields)=>{
+    connection.query(q1,async(err,rows,fields)=>{
         if(err)
-        res.json("Error: "+err);
-        res.json(rows);
+        res.status(010).json("Error: "+err);
+        res.json(await rows);
     })
 
 })
 
-router.route('/').post((req,res)=>{
+router.route('/').post(async(req,res)=>{
     
-    let q1="insert into vehicleCategory set ?"; 
-    
+    let q1="insert into vehicleCategory set ?";
+    let a;
+   try{
+    console.log(await req.body);
+  a={numberOfWheels:await req.body.wheels,fare:await req.body.fare}
+   }
+   catch(e){
+       return e;
+   }
 
-    console.log(a);
        connection.query(q1,a,(err,result)=>{
         if(err)
         res.status(400).json("Error: "+err);
@@ -30,14 +36,3 @@ router.route('/').post((req,res)=>{
 
 
 module.exports=router;
-
-/*
-v
-    let q1="insert into vehicleCategory (numberOfWheels,fare) values ?"; 
-    let a=[[req.wheels,req.fare]]*/
-
-    /*
-    
-    let q1="insert into vehicleCategory set ?"; 
-    let a={numberOfWheels:req.sanitize('wheels').escape().trim(),
-    fare:req.sanitize('fare').escape().trim()}*/
