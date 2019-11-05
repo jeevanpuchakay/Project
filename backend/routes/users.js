@@ -4,17 +4,30 @@ const connection=require('./../db/index');
 
 router.route('/').get((req,res)=>{
 const q1="select * from users"
-    connection.query(q1,(err,rows,fields)=>{
+    connection.query(q1,async(err,rows,fields)=>{
         console.log('Done')
         
-        res.json(rows);
+        res.json(await rows);
     })})
-router.route('/').post((req,res)=>{
-    const q2=`insert into users value (${req.userName},${req.password})`;
-    connection.query(q2,(err,result)=>{
+router.route('/').post(async function (req,res){
+    let q2,a;
+    try{
+        a= {userId:`${req.body.userName}`,password:`${req.body.password}`};
+    console.log(req.body)
+    q2=`insert into users set ?`;
+    }
+    catch(e){
+        return e;
+    }
+    connection.query(q2,a,(err,result)=>{
+        console.log(a);
         if(err)
-        res.json("Error: "+err);
-    })})
+        res.status(400).json("Error: "+err);
+        res.json("Inserted")
+    })
+    connection.end();
+ }
+)
     
     
 module.exports=router;
