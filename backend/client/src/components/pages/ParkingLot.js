@@ -15,7 +15,7 @@ export default class ParkingLot extends Component {
         .get("/timeLine")
         .then(res=>{
             this.setState({users:res.data})
-            console.log(res.data)
+    
         })
 
        

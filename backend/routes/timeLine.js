@@ -30,7 +30,16 @@ router.route('/:id').get(async(req,res)=>{
             console.log('Done')
             if(err)
             res.status(400).json(err);
-            res.json(await rows);
+//let q=rows
+           // q=await rows.userId;
+           let user={};
+           user.userId=rows[0].userId;
+           user.userName=rows[0].userName;
+           user.vehicleId=rows[0].vehicleId;
+           user.vehicleType=rows[0].vehicleType;
+           user.inTime=rows[0].inTime;
+            console.log(user);
+            res.json(user);
         })
         
     }

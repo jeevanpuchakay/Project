@@ -7,16 +7,35 @@ import { Container, Row, Col } from 'react-bootstrap'
 //import  Icon from "@material-ui/core/Icon";
 
 import { Card } from 'react-bootstrap'
+import axios from 'axios';
 
 const pc="https://icon-library.net/images/windows-8-user-icon/windows-8-user-icon-10.jpg";
 
+function getUser(props){
+    let a={}
+   //let a=
+   axios
+    .get(`/timeLine/${props.vehicleId}`)
+    .then(resul=>a=resul.data)
+    
+    console.log(a);
 
 
+
+    //.then(async( res,user)=>{user=await res.data})
+    //.catch(e=>console.log(e));
+}
+
+function buttonHandler (props){
+    let user=getUser(props)
+    //user=console.log(res.data[0])
+    //console.log(user);
+
+}
 
 const UserKard =(props)=> {
   const data=props.packet;
 
-        console.log(props.packet)
         return (
             <div>
                 <Card className="shadow p-3 mb-5 bg-white rounded" style={{ marginRight: '5rem', marginLeft: '15rem', marginTop: '1rem' }}>
@@ -32,8 +51,8 @@ const UserKard =(props)=> {
                             <Row>{data.inTime}</Row>
                             </Col>
                             <Col sm>
-                            <button >
-                                
+                            <button onClick={()=>buttonHandler(data)}>
+                                EXIT
                             </button>
                             </Col>
                             </Row>
