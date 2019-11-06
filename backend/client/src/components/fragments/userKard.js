@@ -12,11 +12,11 @@ import axios from 'axios';
 const pc="https://icon-library.net/images/windows-8-user-icon/windows-8-user-icon-10.jpg";
 
 function getUser(props){
-    let a={}
+    let a;
    //let a=
    axios
     .get(`/timeLine/${props.vehicleId}`)
-    .then(resul=>a=resul.data)
+    .then(resul=>a=resul)
     
     console.log(a);
 

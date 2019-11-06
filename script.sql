@@ -16,3 +16,10 @@ insert into vehicleCategory value (1,.25);
 select * from vehicleCategory;
 
 #drop table history;
+
+SELECT dateadd(day,datediff(day,0,GETDATE()),0);
+
+SELECT * FROM timeLine
+WHERE DATEDIFF(date(timeLine.inTime) ,current_date) = -1;
+
+
