@@ -1,33 +1,68 @@
 const router= require('express').Router();
 
-const connection=require('../db/index');
+
+
+
 
 router.route('/').get(async(req,res)=>{
-const q1="select * from timeLine"
-    connection.query(q1,async(err,rows,fields)=>{
-        console.log('Done')
+   
+    req.getConnection((err,connection)=>{
         
-        res.json(await rows);
-    })})
-router.route('/').post(async(req,res)=>{
+const q1="select * from timeLine"
+connection.query(q1,async(err,rows,fields)=>{
+    console.log('Done')
+    
+    res.json(await rows);
+})
+    })
 
-    let  q=`insert into timeLine set ?`;
-    let a;
-    console.log(req.body)
+})
+
+
+ 
+router.route('/:id').get(async(req,res)=>{
+   await req.getConnection(async(err,connection)=>{
+    let a=req.params.id;
+    const q=`select * from timeLine where vehicleId="${a}"`;
+    console.log(a)
     try{
-        a={userId:`${req.body.userId}`,vehicleId:`${req.body.vehicleId}`,
-        userName:`${req.body.userName}`,vehicleType:req.body.vehicleType
+        connection.query(q,a,async(err,rows,fields)=>{
+            console.log('Done')
+            if(err)
+            res.status(400).json(err);
+            res.json(await rows);
+        })
+        
+    }
+    catch(e){
+        return e;
+    }
+   })
+})    
+
+
+router.route('/').post(async function(req,res){
+
+    req.getConnection(async(err,connection)=>{
+        let  q=`insert into timeLine set ?`;
+    let a;
+    try{
+        a={userId:`${await req.body.userId}`,vehicleId:`${await req.body.vehicleId}`,
+        userName:`${ await req.body.userName}`,vehicleType:await req.body.vehicleType
     };
     }
     catch(e){
         return e;
     }
-    connection.query(q,a,async(err,rows,fields)=>{
+    console.log(a);
+    connection.query(q,a,(err,rows,fields)=>{
         if(err)
         res.status(400).json("Error: "+err);
-        res.json(await rows);
+        
+            res.json(rows);
     })
-
+    })
+    
 })
     
     
