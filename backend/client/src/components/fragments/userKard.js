@@ -11,30 +11,38 @@ import axios from 'axios';
 
 const pc="https://icon-library.net/images/windows-8-user-icon/windows-8-user-icon-10.jpg";
 
+var timeLines=[];
+
+
+// This is one way of doing it.
+function getUsers(){
+    // get all users on page load 
+    axios
+    .get(`/timeLine/`)
+    .then(result=>
+        {
+            timeLines=result.data;
+        });
+}
+
 function getUser(props){
-    let a;
-   //let a=
-   axios
-    .get(`/timeLine/${props.vehicleId}`)
-    .then(resul=>a=resul)
-    
-    console.log(a);
-
-
-
-    //.then(async( res,user)=>{user=await res.data})
-    //.catch(e=>console.log(e));
+    // return specific user based on vehicleId
+    console.log(timeLines);
+    // find function returns first element of the array matching condition
+    let user = timeLines.find((user) => user.vehicleId === props.vehicleId);
+    console.log(user);
+    return user;
 }
 
 function buttonHandler (props){
     let user=getUser(props)
-    //user=console.log(res.data[0])
     //console.log(user);
 
 }
 
 const UserKard =(props)=> {
   const data=props.packet;
+  getUsers();
 
         return (
             <div>
