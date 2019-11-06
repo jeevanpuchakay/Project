@@ -8,15 +8,20 @@ import HomeNavBar from './../navigation/homeNavBar'
 //kard
 import Kard from './../fragments/kard'
 
+import './../../App.css'
+
 
 export default class Dashboard extends Component {
     render() {
         return (
             <div>
                 <HomeNavBar/>
-                <div style={{marginTop:'4.5rem',marginLeft:'10rem'}}>
+                <div  style={{marginTop:'4.5rem',marginLeft:'10rem'}}>
                     <Container>
                     <Row>
+                    <Col sm>
+                    <Kard/>
+                    </Col>
                     <Col sm>
                     <Kard/>
                     </Col>
