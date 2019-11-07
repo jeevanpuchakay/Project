@@ -24,22 +24,23 @@ router.route('/:id').get(async(req,res)=>{
    await req.getConnection(async(err,connection)=>{
     let a=req.params.id;
     const q=`select * from timeLine where vehicleId="${a}"`;
-    console.log(a)
+   // console.log(a)
     try{
-        connection.query(q,a,async(err,rows,fields)=>{
+        connection.query(q,a,async(err,rows)=>{
             console.log('Done')
             if(err)
             res.status(400).json(err);
 //let q=rows
            // q=await rows.userId;
+           //console.log(rows);
            let user={};
            user.userId=rows[0].userId;
            user.userName=rows[0].userName;
            user.vehicleId=rows[0].vehicleId;
            user.vehicleType=rows[0].vehicleType;
            user.inTime=rows[0].inTime;
-            console.log(user);
-            res.json(user);
+            //console.log(user);
+            res.send(user);
         })
         
     }
@@ -75,6 +76,67 @@ router.route('/').post(async function(req,res){
 })
     
     
+
+
+ 
+router.route('/:id').get(async(req,res)=>{
+    await req.getConnection(async(err,connection)=>{
+     let a=req.params.id;
+     const q=`select * from timeLine where vehicleId="${a}"`;
+    // console.log(a)
+     try{
+         connection.query(q,a,async(err,rows)=>{
+             console.log('Done')
+             if(err)
+             res.status(400).json(err);
+ //let q=rows
+            // q=await rows.userId;
+            //console.log(rows);
+            let user={};
+            user.userId=rows[0].userId;
+            user.userName=rows[0].userName;
+            user.vehicleId=rows[0].vehicleId;
+            user.vehicleType=rows[0].vehicleType;
+            user.inTime=rows[0].inTime;
+             //console.log(user);
+             res.send(user);
+         })
+         
+     }
+     catch(e){
+         return e;
+     }
+    })
+ })    
+ 
+ 
+ router.route('/:id').delete(async(req,res)=>{
+ 
+     await req.getConnection(async(err,connection)=>{
+         let  q;
+     try{
+         q=`delete from timeLine where userId="${req.params.id}"`
+     }
+     catch(e){
+         return e;
+     }
+     //console.log(q);
+     connection.query(q,(err,rows,fields)=>{
+         if(err)
+         res.status(400).json("Error: "+err);
+         
+             res.json(rows);
+     })
+     })
+     
+ })
+     
+     
+
+
+
+
+
 module.exports=router;
 
 /*
