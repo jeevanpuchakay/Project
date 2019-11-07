@@ -8,7 +8,7 @@ router.route('/').get(async(req,res)=>{
    
     req.getConnection((err,connection)=>{
         
-const q1="select * from timeLine"
+const q1="select * from timeLine order by inTime DESC"
 connection.query(q1,async(err,rows,fields)=>{
     console.log('Done')
     
