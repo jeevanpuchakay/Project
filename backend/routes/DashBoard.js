@@ -6,7 +6,7 @@ const router= require('express').Router();
 router.route('/Yesterday').get(async(req,res)=>{
 
   await req.getConnection(async(err,connection)=>{
-    const q1="select count(vehicleId) as count from timeLine where DATEDIFF(date(timeLine.inTime),date(current_date))=-1";
+    const q1="select count(vehicleId) as count from history where DATEDIFF(date(timeLine.inTime),date(current_date))=-1";
 try{
     connection.query(q1,async(err,rows,fields)=>{
         console.log('Done')
@@ -23,7 +23,7 @@ catch(e){
 router.route('/ThisWeek').get(async(req,res)=>{
 
     await req.getConnection((err,connection)=>{
-        const q1="select count(vehicleId) as count from timeLine where DATEDIFF(date(timeLine.inTime),date(current_date))>=-7";
+        const q1="select count(vehicleId) as count from history where DATEDIFF(date(timeLine.inTime),date(current_date))>=-7";
 try{
     connection.query(q1,async(err,rows,fields)=>{
         console.log('Done')
@@ -43,7 +43,7 @@ catch(e){
 router.route('/ThisMonth').get(async(req,res)=>{
 
     await req.getConnection((err,connection)=>{
-        const q1="select count(vehicleId) as count from timeLine where DATEDIFF(date(timeLine.inTime),date(current_date))>=-30";
+        const q1="select count(vehicleId) as count from history where DATEDIFF(date(timeLine.inTime),date(current_date))>=-30";
 try{
     connection.query(q1,async(err,rows,fields)=>{
         console.log('Done')
