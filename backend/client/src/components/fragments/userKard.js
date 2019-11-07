@@ -11,25 +11,34 @@ import axios from 'axios';
 
 const pc="https://icon-library.net/images/windows-8-user-icon/windows-8-user-icon-10.jpg";
 
-function getUser(props){
-    let a;
+async function getUser(props){
+    //let a;
    //let a=
-   axios
+   return await axios
     .get(`/timeLine/${props.vehicleId}`)
-    .then(resul=>a=resul)
-    
-    console.log(a);
-
-
-
-    //.then(async( res,user)=>{user=await res.data})
-    //.catch(e=>console.log(e));
 }
 
-function buttonHandler (props){
-    let user=getUser(props)
-    //user=console.log(res.data[0])
-    //console.log(user);
+async function putUser(props){
+    //console.log(await props)
+  await axios.post('/history',{
+        userId:await props.userId,
+        vehicleId:await  props.vehicleId,
+        vehicleType:await props.vehicleType,
+        //inTime:await props.inTime
+    })
+    .then(res=>console.log(res))
+    .catch(err=>console.log(err));
+    } 
+
+async function buttonHandler (props){
+    let user=await getUser(props)
+    user=await user.data;
+    await putUser(await user);
+
+    axios
+    .delete(`/timeLine/${user.userId}`)
+    .then(res=>console.log(res))
+    .catch(err=>console.log(err.response));
 
 }
 
