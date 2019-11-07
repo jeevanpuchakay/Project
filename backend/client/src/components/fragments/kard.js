@@ -4,19 +4,19 @@ import React, { Component } from 'react'
 
 import {Card} from 'react-bootstrap'
 
-export default class Kard extends Component {
-    render() {
+const Kard=(props)=>{
+   // console.log(props);
         return (
             <div>
                 <Card style={{width:'10rem',backgroundColor:'grey'}}>
                     <Card.Body>
                         <div style={{color:'white'}}>
                         <Card.Title>
-                            Yesterday
+                            {props.day}
                         </Card.Title>
                         <br />
                         <Card.Title>
-                            Bikes count
+                            Bikes :{props.count}
                         </Card.Title>
                         <Card.Title>
                             Cars count
@@ -27,4 +27,6 @@ export default class Kard extends Component {
             </div>
         )
     }
-}
+
+
+    export default Kard;

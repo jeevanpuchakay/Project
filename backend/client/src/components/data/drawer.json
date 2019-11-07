@@ -8,8 +8,11 @@
     "A":"Category"
 }, 
 {
-    "A":"Add vehicle"
+    "A":"Addvehicle"
 },
 {
     "A":"ParkingLot"
+},
+{
+    "A":"History"
 }]
