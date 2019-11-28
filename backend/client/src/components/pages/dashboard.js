@@ -6,37 +6,22 @@ import {Container,Row,Col} from 'react-bootstrap'
 import HomeNavBar from './../navigation/homeNavBar'
 
 //kard
-import Kard from './../fragments/kard'
+import Kard1 from './../fragments/Kard1'
+import Kard2 from './../fragments/Kard2'
+import Kard3 from './../fragments/Kard3'
 
 import './../../App.css'
 
-import axios from 'axios';
+
 
 
 import DashboardKard from './../fragments/dashboardKard'
 
 
+
 export default class Dashboard extends Component {
-    state={
-        yesterday:0,
-        week:0,
-        month:0
-    }
-    componentDidMount(){
-        axios.get('/DashBoard/Yesterday').then(res=>{
-            this.setState({yesterday:res.data[0].count})
-        })
-        .catch(err=>console.log(err.response));
-        //console.log(this.state.yesterday);
-        axios.get('/DashBoard/ThisWeek').then(res=>{
-            this.setState({week:res.data[0].count})
-        })
-        .catch(err=>console.log(err.response));
-        axios.get('/DashBoard/ThisMonth').then(res=>{
-            this.setState({month:res.data[0].count})
-        })
-        .catch(err=>console.log(err.response));
-    }
+    
+
     render() {
         return (
             <div>
@@ -45,13 +30,13 @@ export default class Dashboard extends Component {
                     <Container>
                     <Row>
                     <Col sm>
-                    <Kard count={this.state.yesterday} day="Yesterday"/>
+                    <Kard1/>
                     </Col>
                     <Col sm>
-                    <Kard count={this.state.week} day="This weeek"/>
+                    <Kard2/>
                     </Col>
                     <Col sm>
-                    <Kard count={this.state.month} day="This Month"/>
+                    <Kard3/>
                     </Col>
                     </Row>
                     </Container>

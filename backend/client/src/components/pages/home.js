@@ -9,6 +9,12 @@ export default class Home extends Component {
         return (
             <div>
                 <HomeNavBar/>
+
+                <div style={{marginLeft:'40rem',marginTop:"5rem"}}>
+                    <h1>
+                        Welcome
+                    </h1>
+                </div>
             </div>
         )
     }

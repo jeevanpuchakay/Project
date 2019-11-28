@@ -11,8 +11,10 @@ import { Card } from 'react-bootstrap'
 
 import axios from 'axios'
 
+import HomeNavBar from './../navigation/homeNavBar'
+import UserKard from './../fragments/userKard'
 
-export default class VehicleKard extends Component {
+export default class SearchVehicle extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,67 +22,54 @@ export default class VehicleKard extends Component {
             userName:'userName',
             vehicleType:1,
             vehicleId:'vehicleId',
-            floorNo:0
+            floorNo:0,
+            vehicles:[]
     };
     this.handleChange1 = this.handleChange1.bind(this);
     this.handleChange2 = this.handleChange2.bind(this);
     this.handleChange3 = this.handleChange3.bind(this);
-    this.handleChange4 = this.handleChange4.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.handleChange4 = this.handleChange4.bind(this);
       }
       handleChange1(event){
           //event.preventDefault();
           this.setState({userId:event.target.value})
-          //.log(this.state.userId);
+          console.log(this.state.userId);
+          axios.get(`/SearchVehicle/userId/${this.state.userId}`).then(res=>{
+            // console.log(res)
+             this.setState({vehicles:res.data})
+             console.log(this.state)
+         }       
+             )
       }
       handleChange2(event){
         //event.preventDefault();
         this.setState({vehicleId:event.target.value})
-        //console.log(this.state.vehicleId);
+        console.log(this.state.vehicleId);
+        axios.get(`/SearchVehicle/vehicleId/${this.state.vehicleId}`).then(res=>{
+            // console.log(res)
+             this.setState({vehicles:res.data})
+             console.log(this.state)
+         }       
+             )
     }
     handleChange3(event){
         //event.preventDefault();
         this.setState({userName:event.target.value})
-       // console.log(this.state.userName);
+        axios.get(`/SearchVehicle/userName/${this.state.userName}`).then(res=>{
+           // console.log(res)
+            this.setState({vehicles:res.data})
+            console.log(this.state)
+        }       
+            )
+        console.log(this.state.userName);
     }
-    handleChange4(event){
-        //event.preventDefault();
-        this.setState({vehicleType:event.target.value})
-        //console.log(this.state.vehicleType);
-    }
-    handleSubmit(event){
-       // console.log(this.state);
-        //let a;
-        axios.get(`/Block/check/${this.state.vehicleType}`).then(res=>{
-            console.log(res)
-            if(res.status===300)
-            {
-                alert("No vacancies")
-                return;
-            }
-            else{ 
-                let a=res.data;
-               // console.log(a);
-                axios.post(`/timeLine/${a}`,this.state).then(res=>{
-                    if(res.status===200){
-                        alert("User Inserted");
-                        this.setState  ({
-                            userId:'userId',
-                            userName:'userName',
-                            vehicleType:1,
-                            vehicleId:'vehicleId'
-                    });
-                    }
-                }).catch(err=>console.log(err.response));
-            }
-        })
-        
-        
+    
+   
 
-    }
     render() {
         return (
             <div>
+                <HomeNavBar/>
                 <Card className="shadow p-3 mb-5 bg-white rounded" style={{ marginRight: '5rem', marginLeft: '15rem', marginTop: '1rem' }}>
                     <Card.Body>
                         <Container>
@@ -114,26 +103,20 @@ export default class VehicleKard extends Component {
                                     onChange={this.handleChange3} />
                                 </Col>
                             </Row>
-                            <Row style={{ marginLeft: '0em' }}>
-                                <Col sm>
-                                    vehicleType:
-                            </Col>
-                                <Col>
-                                    <input type="text" name="vehicleType"
-                                    value={this.state.vehicleType}
-                                    onChange={this.handleChange4} />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col sm>
-                                    <button onClick={this.handleSubmit}>
-                                        Add
-                            </button>
-                                </Col>
-                            </Row>
+                           
                         </Container>
                     </Card.Body>
                 </Card>
+
+                <div>
+                    {
+                        this.state.vehicles.map((q)=>{
+                            return(
+                                <UserKard packet={q}/>
+                            )
+                        })
+                    }
+                </div>
             </div>
         )
     }

@@ -9,26 +9,17 @@ const q1="select * from history order by outTime DESC "
         
         res.json(await rows);
     })})
-router.route('/').post(async(req,res)=>{
-
-    let  q=`insert into history set ?`;
+router.route('/:id').post(async(req,res)=>{
     let a;
-    try{
-        //hpending
-        //have to add intime while removing outtime
-        a={userId:`${req.body.userId}`,
-        vehicleId:`${req.body.vehicleId}`,
-        vehicleType:req.body.vehicleType,
-       // inTime:req.body.inTime
-        
-    };
-    }
-    catch(e){
-        return e;
-    }
+   try{
+    a=await req.params.id;
+   }catch(e){
+       return e;
+   }
+    let  q=`update history set outTime=current_timestamp where orderId="${a}"`;
     //userName:`${req.body.userName}`,
     console.log(a)
-    connection.query(q,await a,async(err,rows,fields)=>{
+    connection.query(q,async(err,rows,fields)=>{
         if(err)
         res.status(400).json("Error: "+err);
         res.json(await rows);
@@ -37,6 +28,6 @@ router.route('/').post(async(req,res)=>{
 })
     
     
-module.exports=router;
+
     
 module.exports=router;

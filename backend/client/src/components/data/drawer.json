@@ -1,12 +1,7 @@
-[{
-    "A":"DashBoard"
-}, 
-{
-    "A":"Users"
-}, 
-{
-    "A":"Category"
-}, 
+[
+    {
+        "A":"DashBoard"
+    },
 {
     "A":"Addvehicle"
 },
@@ -14,5 +9,5 @@
     "A":"ParkingLot"
 },
 {
-    "A":"History"
+    "A":"SearchVehicle"
 }]

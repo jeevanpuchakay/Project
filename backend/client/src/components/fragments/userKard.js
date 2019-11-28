@@ -3,8 +3,10 @@ import React from 'react'
 
 import { Container, Row, Col } from 'react-bootstrap'
 
-
+//import {Route} from 'react-router-dom'
 //import  Icon from "@material-ui/core/Icon";
+
+//import Bill from './Bill'
 
 import { Card } from 'react-bootstrap'
 import axios from 'axios';
@@ -15,31 +17,27 @@ async function getUser(props){
     //let a;
    //let a=
    return await axios
-    .get(`/timeLine/${props.vehicleId}`)
+    .get(`/timeLine/${props.orderId}`)
 }
 
-async function putUser(props){
-    //console.log(await props)
-  await axios.post('/history',{
-        userId:await props.userId,
-        vehicleId:await  props.vehicleId,
-        vehicleType:await props.vehicleType,
-        //inTime:await props.inTime
-    })
-    .then(res=>console.log(res))
-    .catch(err=>console.log(err));
-    } 
 
 async function buttonHandler (props){
     let user=await getUser(props)
     user=await user.data;
-    await putUser(await user);
-
     axios
-    .delete(`/timeLine/${user.userId}`)
+    .post(`/timeLine/delete/${user.orderId}`)
     .then(res=>console.log(res))
     .catch(err=>console.log(err.response));
 
+    axios
+    .get(`/Bill/${user.orderId}`)
+    .then(async res=>{
+        let a;
+        a=await res.data;
+        console.log(res.data);
+
+        alert("Billing amout: ",a," units ","Visit Soon!!!")
+    })
 }
 
 const UserKard =(props)=> {
@@ -56,6 +54,7 @@ const UserKard =(props)=> {
                             </Col>
                             <Col sm>
                             <Row>{data.userName}</Row>
+                            <Row>{data.orderId}</Row>
                             <Row>{data.vehicleType}</Row>
                             <Row>{data.inTime}</Row>
                             </Col>

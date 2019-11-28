@@ -12,6 +12,10 @@ const port =8080;
 
 const mysql= require('mysql');
 
+const uuid=require('shortid');
+
+console.log("uuid: ",uuid())
+
 
 const router=require('express').Router();
 
@@ -65,6 +69,19 @@ const dashboard=require('./routes/DashBoard')
 
 app.use('/DashBoard',dashboard);
 
+
+const block=require('./routes/block');
+
+app.use('/Block',block);
+
+
+const searchvehicle=require('./routes/SearchVehicles')
+
+app.use('/SearchVehicle',searchvehicle);
+
+const bill=require('./routes/bill')
+
+app.use('/Bill',bill)
 
 const connection=require('./db/index');
 
